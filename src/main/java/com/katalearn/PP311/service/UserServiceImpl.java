@@ -17,7 +17,8 @@ public class UserServiceImpl implements UserService{
     }
 
     public User findById(Long id) {
-        return userRepository.getOne(id);
+        System.out.println("2-" + id);
+        return userRepository.getReferenceById(id);
     }
 
     public List<User> findAll() {
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public void deleteById(Long id) {
+        System.out.println("Delete " + id);
         userRepository.deleteById(id);
     }
 

@@ -20,9 +20,7 @@ public class UserController {
 
     @GetMapping(value = "/")
     public String startPageOpen(Model model) {
-        List<User> users = userServiceImpl.findAll();
-        model.addAttribute("users", users);
-        return "user-list";
+        return "redirect: /users";
     }
 
     @GetMapping(value = "/users")
@@ -43,6 +41,7 @@ public class UserController {
 
     @GetMapping(value = "/user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
+        System.out.println("Start deleting " + id);
         userServiceImpl.deleteById(id);
         return "redirect:/users";
     }
