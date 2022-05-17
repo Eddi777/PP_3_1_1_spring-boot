@@ -2,6 +2,7 @@ package com.katalearn.PP311.controller;
 
 import com.katalearn.PP311.model.User;
 import com.katalearn.PP311.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,27 +13,24 @@ import java.util.List;
 
 @Controller
 public class UserController {
-
-    private final UserServiceImpl userServiceImpl;
-    public UserController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-    }
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @GetMapping(value = "/")
-    public String startPageOpen(Model model) {
+    public String startPageOpen() {
         return "redirect: /users";
     }
 
     @GetMapping(value = "/users")
     public String findAll(Model model) {
-        List<User> users = userServiceImpl.findAll();
-        model.addAttribute("users", users);
+        model.addAttribute("users", userServiceImpl.findAll());
         return "user-list";
     }
     @GetMapping(value="/user-create")
-    public String createUserForm(User user) {
+    public String createUserForm() {
         return "user-create";
     }
+
     @PostMapping(value = "/user-create")
     public String createUser(User user) {
         userServiceImpl.save(user);
@@ -41,7 +39,6 @@ public class UserController {
 
     @GetMapping(value = "/user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-        System.out.println("Start deleting " + id);
         userServiceImpl.deleteById(id);
         return "redirect:/users";
     }
